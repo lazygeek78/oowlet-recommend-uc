@@ -1,0 +1,3 @@
+service=oowlet-recommend-uc
+version=0.1.0
+commit=915c48d

@@ -1,0 +1,20 @@
+{
+  "content": {
+    "version": "1",
+    "weights": {
+      "user_interest": 1.0, "content_relevance": 0.8, "behavioral_affinity": 1.0, "context_relevance": 0.6,
+      "quality": 0.6, "credibility": 0.5, "freshness": 0.5, "social_signal": 0.5, "trend_signal": 0.4,
+      "creator_affinity": 0.7, "repetition": -0.8, "negative_feedback": -1.5
+    },
+    "surfaces": {
+      "SURFACE_REELS": {"freshness": 0.9, "trend_signal": 0.7},
+      "SURFACE_EXPLORE": {"user_interest": 0.6, "trend_signal": 0.8}
+    }
+  },
+  "people": {
+    "weights": {
+      "mutual_connections": 1.2, "shared_interests": 1.0, "community_overlap": 0.7, "interaction": 0.8,
+      "context_relevance": 0.6, "profile_quality": 0.5, "activity": 0.4, "reciprocity": 0.6
+    }
+  }
+}

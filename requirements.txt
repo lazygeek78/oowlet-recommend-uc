@@ -1,0 +1,7 @@
+# Runtime dependencies of oowlet-recommend-uc.
+grpcio==1.80.0
+protobuf==6.33.1
+numpy==2.2.6
+
+# Optional, not installed by default:
+#   sentence-transformers  embeddings with BGE / E5 (RUC_INTELLIGENCE__EMBEDDING_MODEL=BAAI/bge-small-en-v1.5)

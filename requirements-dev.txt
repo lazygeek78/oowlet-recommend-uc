@@ -1,0 +1,13 @@
+-r requirements.txt
+
+# Code generation (scripts/gen_protos.py)
+grpcio-tools==1.80.0
+
+# Packaging (make build: wheel + executable)
+setuptools==80.9.0
+wheel==0.45.1
+pyinstaller==6.11.1
+
+# Tests
+pytest==8.3.4
+pytest-asyncio==0.24.0
