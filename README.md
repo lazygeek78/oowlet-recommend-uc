@@ -94,3 +94,192 @@ Configuration is through `RUC_*` variables; every setting is in `.env.example`. 
   - Matrix factorization is dense numpy, for up to a few hundred thousand users × items.
 - **Training data** comes from the serve log. With the in-memory store, run training inside the server (`RUC_TRAINING__INTERVAL_MINUTES`).
 - **Page tokens** belong to the instance that served page 1, for 30 minutes.
+
+
+I wanted to design the recommendation engine for content and user based on which the content fetched as per user preferences. Similarly for user. My intent is to create recommendation engine for selecting content and user to whom a member can be connected to. 
+Here in this code it should track engagement around content and it should also track the users data and his preferences to find whether particular content can be recommended to the given user or not. it should able to see history data of related content and other users , and many more. So can you guide me how I will design the recommendation engine. 
+dual recommendation platform inside Oowlet AI:
+Content Recommendation Engine — What content should this member see?
+People Recommendation Engine — Which people should this member connect with?
+
+The important part is that these should share the same user intelligence, behavioral data, embeddings, feedback loop , while having different candidate-generation and ranking logic.
+
+The recommendation engines should not independently build an understanding of users or content. They should consume a shared intelligence layer.
+
+Oowlet then determines:
+What are the best candidates for this particular user, at this particular time, in this particular context?
+User
+ │
+ ▼
+Candidate Generation
+ │
+ ├── Collaborative Filtering
+ ├── Content Similarity
+ ├── Behavioral Similarity
+ ├── Social Graph
+ ├── Trending
+ ├── Fresh Content
+ ├── Followed Creators
+ └── Contextual Candidates
+ │
+ ▼
+Candidate Pool
+ │
+ ▼
+Ranking Model
+ │
+ ▼
+Policy / Trust / Diversity
+ │
+ ▼
+Final Recommendations
+
+The signals which is collected are 
+IMPRESSION
+    ↓
+CLICK
+    ↓
+OPEN
+    ↓
+VIEW
+    ↓
+WATCH TIME
+    ↓
+COMPLETION
+    ↓
+LIKE
+    ↓
+COMMENT
+    ↓
+SHARE
+    ↓
+SAVE
+    ↓
+FOLLOW
+    ↓
+PURCHASE
+    ↓
+OUTCOME
+
+Oowlet need to generate:
+	•	embeddings
+	•	topics
+	•	entities
+	•	sentiment
+	•	intent
+	•	content category
+	•	quality
+	•	credibility
+	•	behavioral signals
+	•	visual features
+	•	audio features
+	•	semantic features
+The recommendation engine consumes those features.
+1. You need to generate candidate. 
+2. After candidate generation, you calculate a recommendation score.
+Recommendation Score =
+    User Interest
+  + Content Relevance
+  + Behavioral Affinity
+  + Context Relevance
+  + Quality
+  + Credibility
+  + Freshness
+  + Social Signal
+  + Trend Signal
+  + Creator Affinity
+  - Repetition
+  - Negative Feedback
+
+Initially you can use a weighted scoring system.
+Later you train a ranking model.
+Context should modify the recommendation
+Context to include 
+User
+├── historical preferences
+├── current session
+├── location
+├── device
+├── time
+├── activity
+├── current topic
+├── current community
+└── recent interactions
+
+This is contextual recommendation, and it fits very well with your Human Intelligence architecture.
+Oowlet Recommendation Feature Store I will integrate to feature management module. This module should able to collaborate with feature management module. 
+
+maintain an embedding representation of the user's interests.
+User Profile
+     │
+     ├── Explicit Preferences
+     ├── Behavioral Preferences
+     ├── Historical Preferences
+     ├── Contextual Preferences
+     └── User Embedding
+Historical data should be time-aware
+
+Feedback loop 
+                 Recommendation
+                       │
+                       ▼
+                     User
+                       │
+                       ▼
+                   Behavior
+                       │
+                       ▼
+                Event Collection
+                       │
+                       ▼
+                 Feature Update
+                       │
+                       ▼
+                Model Evaluation
+                       │
+                       ▼
+             Recommendation Model
+                       │
+                       └──────────────→
+
+The model stack
+
+Candidate generation
+	•	Collaborative filtering
+	•	Matrix factorization
+	•	Two-tower retrieval
+	•	Approximate nearest-neighbor/vector search
+	•	Graph-based recommendation
+	•	Content-based retrieval
+Ranking
+	•	Logistic regression initially
+	•	Gradient boosted trees
+	•	XGBoost / LightGBM
+	•	Deep ranking models
+	•	Wide & Deep
+	•	DeepFM
+	•	DLRM-style architectures
+Embeddings
+	•	Sentence Transformers
+	•	BGE
+	•	E5
+	•	domain-specific embedding models
+Graph
+For people recommendation:
+	•	graph embeddings
+	•	GraphSAGE
+	•	LightGCN
+	•	GAT
+LLMs
+Use LLMs where they add value:
+	•	semantic understanding
+	•	cold-start content
+	•	intent interpretation
+	•	explanation
+	•	feature extraction
+	•	query understanding
+
+the recommendation engine isn't just consuming Human Intelligence; it is continuously generating new behavioral intelligence about how people discover, choose, connect, engage and decide.
+I would therefore make Recommendation Intelligence one of the major AI services inside Oowlet AI, with Content Recommendation and People Recommendation as two specialized engines sharing one common User/Content Intelligence and Feature Platform.
+
+
